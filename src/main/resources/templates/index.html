@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.css}"/>
+    <title>Title</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text">Список дел</h1>
+
+        <table class="table table-bordered table-striped">
+        <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Задача</th>
+                    <th>Сделано</th>
+                    <th>Дата создания</th>
+                    <th>Дата изменения</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${todoItems}" th:class="${item.complete}">
+                <td th:text="${item.id}">item_id</td>
+                <td th:text="${item.description}">item_description</td>
+                <td th:text="${item.complete}">item_complete</td>
+                <td th:text="${item.createdDate}">item_created_date</td>
+                <td th:text="${item.modifiedDate}">item_modified_date</td>
+                <td>
+                    <div class="btn btn-group-sm" role="group">
+                        <a class="btn btn-info" th:href="@{/edit/{id}(id=${item.id})}">Изменить</a>
+                        <a class="btn btn-danger" th:href="@{/delete/{id}(id=${item.id})}">Удалить</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p><a class="btn btn-success" href="/create-todo">Добавить задачу</a></p>
+    </div>
+    <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.js}"></script>
+</body>
+</html>
