@@ -13,13 +13,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.Instant;
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Controller
 public class TodoItemController {
     private final Logger logger = LoggerFactory.getLogger(TodoItemController.class);
 
     private final TodoItemRepository todoItemRepository;
+    LocalDateTime moscowTime = LocalDateTime.now(ZoneId.of("Europe/Moscow"));
 
     public TodoItemController(TodoItemRepository todoItemRepository) {
         this.todoItemRepository = todoItemRepository;
@@ -40,7 +44,7 @@ public class TodoItemController {
             return "update-todo-item";
         }
 
-        todoItem.setModifiedDate(Instant.now());
+        todoItem.setModifiedDate(moscowTime);
         todoItemRepository.save(todoItem);
         return "redirect:/";
     }
@@ -50,9 +54,8 @@ public class TodoItemController {
         if (result.hasErrors()) {
             return "add-todo-item";
         }
-
-        todoItem.setCreatedDate(Instant.now());
-        todoItem.setModifiedDate(Instant.now());
+        todoItem.setCreatedDate(moscowTime);
+        todoItem.setModifiedDate(moscowTime);
         todoItemRepository.save(todoItem);
         return "redirect:/";
     }

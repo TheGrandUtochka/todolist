@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "task")
@@ -25,20 +27,21 @@ public class TodoItem {
 
     @Getter
     @Setter
-    private Instant createdDate;
+    private LocalDateTime createdDate;
 
     @Getter
     @Setter
-    private Instant modifiedDate;
-
+    private LocalDateTime modifiedDate;
     public TodoItem() {
     }
+
+    LocalDateTime moscowTime = LocalDateTime.now(ZoneId.of("Europe/Moscow"));
 
     public TodoItem(String description) {
         this.description = description;
         this.complete = false;
-        this.createdDate = Instant.now();
-        this.modifiedDate = Instant.now();
+        this.createdDate = LocalDateTime.now(ZoneId.from(moscowTime));
+        this.modifiedDate = LocalDateTime.now(ZoneId.from(moscowTime));
     }
 
     @Override
